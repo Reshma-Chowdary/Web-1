@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Insert title here</title>
+</head>
+
+<body style="background-color: skyblue;">
+	
+	<center>
+		<br>
+		<h1>TrainTicket Booking</h1>
+		<br>
+		<label>from <select id="from">
+				<option>select</option>
+			</select></label>
+		<label>to <select id="to">
+				<option>select</option>
+			</select></label><br><br>
+		<label>Trains <select id="Trains">
+				<option>select</option>
+			</select></label>
+	</center>
+	<script>
+		var mad = new XMLHttpRequest();
+		mad.open('GET', 'TicketServlet', true);
+		mad.onreadystatechange = function () {
+			console.log("madhu");
+			if (mad.status === 200 && mad.readyState === 4) {
+				const data = JSON.parse(mad.responseText);
+				Process1(data);
+			}
+		}
+		function Process1(data) {
+			const from = document.getElementById('from');
+			data.forEach(function (item) {
+				const sel = document.createElement('option');
+				sel.textContent = item.from;
+				from.appendChild(sel);
+			})
+
+			const to = document.getElementById('to');
+			data.forEach(function (item) {
+				const sel = document.createElement('option');
+				sel.textContent = item.to;
+				to.appendChild(sel);
+			})
+		}
+
+
+		mad.send();
+	</script>
+</body>
+
+</html>
